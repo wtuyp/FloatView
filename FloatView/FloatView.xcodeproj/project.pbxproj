@@ -15,7 +15,7 @@
 		1A8947701E7AE73E00667E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A89476E1E7AE73E00667E81 /* LaunchScreen.storyboard */; };
 		1A89477B1E7AE73E00667E81 /* FloatViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A89477A1E7AE73E00667E81 /* FloatViewTests.m */; };
 		1A8947861E7AE73E00667E81 /* FloatViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8947851E7AE73E00667E81 /* FloatViewUITests.m */; };
-		1AD3D4761E7BD1A200DC965F /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D4751E7BD1A200DC965F /* FloatView.m */; };
+		EB3999771F7E38AC003AE3C9 /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3999761F7E38AC003AE3C9 /* FloatView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +52,8 @@
 		1A8947811E7AE73E00667E81 /* FloatViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FloatViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A8947851E7AE73E00667E81 /* FloatViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloatViewUITests.m; sourceTree = "<group>"; };
 		1A8947871E7AE73E00667E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1AD3D4741E7BD1A200DC965F /* FloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatView.h; sourceTree = "<group>"; };
-		1AD3D4751E7BD1A200DC965F /* FloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatView.m; sourceTree = "<group>"; };
+		EB3999751F7E38AC003AE3C9 /* FloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatView.h; sourceTree = "<group>"; };
+		EB3999761F7E38AC003AE3C9 /* FloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +104,7 @@
 		1A89475F1E7AE73D00667E81 /* FloatView */ = {
 			isa = PBXGroup;
 			children = (
-				1AD3D4741E7BD1A200DC965F /* FloatView.h */,
-				1AD3D4751E7BD1A200DC965F /* FloatView.m */,
+				EB3999741F7E38AC003AE3C9 /* FloatView */,
 				1A8947631E7AE73D00667E81 /* AppDelegate.h */,
 				1A8947641E7AE73D00667E81 /* AppDelegate.m */,
 				1A8947661E7AE73D00667E81 /* ViewController.h */,
@@ -143,6 +142,15 @@
 				1A8947871E7AE73E00667E81 /* Info.plist */,
 			);
 			path = FloatViewUITests;
+			sourceTree = "<group>";
+		};
+		EB3999741F7E38AC003AE3C9 /* FloatView */ = {
+			isa = PBXGroup;
+			children = (
+				EB3999751F7E38AC003AE3C9 /* FloatView.h */,
+				EB3999761F7E38AC003AE3C9 /* FloatView.m */,
+			);
+			path = FloatView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,7 +292,7 @@
 				1A8947681E7AE73E00667E81 /* ViewController.m in Sources */,
 				1A8947651E7AE73D00667E81 /* AppDelegate.m in Sources */,
 				1A8947621E7AE73D00667E81 /* main.m in Sources */,
-				1AD3D4761E7BD1A200DC965F /* FloatView.m in Sources */,
+				EB3999771F7E38AC003AE3C9 /* FloatView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

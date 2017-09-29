@@ -29,6 +29,11 @@ static char kActionHandlerTapGestureKey;
         self.stayEdgeDistance = 5;
         self.stayAnimateTime = 0.3;
         [self initStayLocation];
+        
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+        [pan setMinimumNumberOfTouches:1];
+        [pan setMaximumNumberOfTouches:1];
+        [self addGestureRecognizer:pan];
     }
     return self;
 }
@@ -36,43 +41,53 @@ static char kActionHandlerTapGestureKey;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self = [[FloatView alloc] initWithImage:[UIImage imageNamed:@"FloatBonus"]];
-        self.userInteractionEnabled = YES;
-        self.stayEdgeDistance = 5;
-        self.stayAnimateTime = 0.3;
-        [self initStayLocation];
+        self = [[FloatView alloc] initWithImage:[UIImage imageNamed:@""]];
     }
     return self;
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    // 先让悬浮图片的alpha为1
-    self.alpha = 1;
-    // 获取手指当前的点
-    UITouch * touch = [touches anyObject];
-    CGPoint  curPoint = [touch locationInView:self];
-    
-    CGPoint prePoint = [touch previousLocationInView:self];
-    
-    // x方向移动的距离
-    CGFloat deltaX = curPoint.x - prePoint.x;
-    CGFloat deltaY = curPoint.y - prePoint.y;
-    CGRect frame = self.frame;
-    frame.origin.x += deltaX;
-    frame.origin.y += deltaY;
-    self.frame = frame;
+- (void)panAction:(UIPanGestureRecognizer *)recognizer {
+    CGPoint translatedPoint = [recognizer translationInView:self];
+    CGFloat x = recognizer.view.center.x + translatedPoint.x;
+    CGFloat y = recognizer.view.center.y + translatedPoint.y;
+    recognizer.view.center = CGPointMake(x, y);
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        self.alpha = 1;
+    } else if ((recognizer.state == UIGestureRecognizerStateEnded) ||
+               (recognizer.state == UIGestureRecognizerStateCancelled)) {
+        [self moveStay];
+    }
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self moveStay];
-    // 这里可以设置过几秒，alpha减小
-//    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [pThis animateHidden];
-    });
-}
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    // 先让悬浮图片的alpha为1
+//    self.alpha = 1;
+//    // 获取手指当前的点
+//    UITouch * touch = [touches anyObject];
+//    CGPoint  curPoint = [touch locationInView:self];
+//
+//    CGPoint prePoint = [touch previousLocationInView:self];
+//
+//    // x方向移动的距离
+//    CGFloat deltaX = curPoint.x - prePoint.x;
+//    CGFloat deltaY = curPoint.y - prePoint.y;
+//    CGRect frame = self.frame;
+//    frame.origin.x += deltaX;
+//    frame.origin.y += deltaY;
+//    self.frame = frame;
+//}
+
+//- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [self moveStay];
+//    // 这里可以设置过几秒，alpha减小
+////    __weak typeof(self) weakSelf = self;
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+////        [pThis animateHidden];
+//    });
+//}
 
 #pragma mark - 设置浮动图片的初始位置
 - (void)initStayLocation
@@ -85,6 +100,26 @@ static char kActionHandlerTapGestureKey;
     frame.origin.y = initY;
     self.frame = frame;
     mIsHalfInScreen = NO;
+}
+
+- (void)setStayEdgeDistance:(CGFloat)stayEdgeDistance {
+    _stayEdgeDistance = stayEdgeDistance;
+    
+    CGRect frame = self.frame;
+    CGFloat stayWidth = frame.size.width;
+    
+    bool isLeft = [self judgeLocationIsLeft];
+    if (isLeft) {
+        CGFloat initX = self.stayEdgeDistance;
+        frame.origin.x = initX;
+        self.frame = frame;
+    } else {
+        CGFloat initX = kScreenWidth - self.stayEdgeDistance - stayWidth;
+        frame.origin.x = initX;
+        self.frame = frame;
+    }
+    
+    
 }
 
 #pragma mark - 根据 stayModel 来移动悬浮图片
